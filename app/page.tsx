@@ -28,6 +28,37 @@ const riskValues: Record<string, number> = {
   Other: 5,
 };
 
+const demoSignals: Signal[] = [
+  {
+    id: 1,
+    location: "Zone A",
+    category: "Rainfall",
+    description: "Increasing rainfall observed in the local area.",
+    time: "08:00",
+  },
+  {
+    id: 2,
+    location: "Zone A",
+    category: "Traffic",
+    description: "Traffic congestion is increasing near the main road.",
+    time: "09:00",
+  },
+  {
+    id: 3,
+    location: "Zone A",
+    category: "Waterlogging",
+    description: "Water accumulation reported near the road.",
+    time: "10:00",
+  },
+  {
+    id: 4,
+    location: "Zone A",
+    category: "Road Blockage",
+    description: "Partial road blockage reported in the affected area.",
+    time: "11:00",
+  },
+];
+
 function calculateRisk(signals: Signal[]) {
   const baseScore = signals.reduce(
     (total, signal) =>
@@ -63,11 +94,11 @@ export default function Home() {
       localStorage.getItem("safepulseSignals") || "[]"
     );
 
-    setSignals(savedSignals);
-
     if (savedSignals.length > 0) {
+      setSignals(savedSignals);
       setRisk(calculateRisk(savedSignals));
     } else {
+      setSignals(demoSignals);
       setRisk(76);
     }
   }, []);
@@ -145,15 +176,13 @@ export default function Home() {
             </p>
 
             <p className="mt-4 text-3xl font-semibold text-orange-400">
-              {signals.length >= 2 ? "Increasing" : "Monitoring"}
+              Increasing
             </p>
 
             <p className="mt-2 text-sm text-slate-500">
-              Based on {signals.length} active signal
-              {signals.length !== 1 ? "s" : ""}
+              Based on {signals.length} active signals
             </p>
           </div>
-
         </div>
 
         {/* Risk Evolution */}
@@ -169,7 +198,7 @@ export default function Home() {
             </h2>
 
             <p className="mt-1 text-sm text-slate-400">
-              Risk evolution based on reported local signals
+              Risk evolution based on multiple local signals
             </p>
           </div>
 
@@ -205,7 +234,6 @@ export default function Home() {
               </LineChart>
             </ResponsiveContainer>
           </div>
-
         </section>
 
         {/* Active Signals */}
@@ -227,45 +255,32 @@ export default function Home() {
             </span>
           </div>
 
-          {signals.length === 0 ? (
-            <div className="mt-4 rounded-xl border border-dashed border-slate-700 bg-slate-900 p-6 text-center">
-              <p className="text-slate-400">
-                No local signals reported yet.
-              </p>
+          <div className="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
 
-              <p className="mt-2 text-sm text-slate-500">
-                Use the Report page to add a local observation.
-              </p>
-            </div>
-          ) : (
-            <div className="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {signals.slice(-4).map((signal) => (
+              <div
+                key={signal.id}
+                className="rounded-xl border border-slate-800 bg-slate-900 p-5"
+              >
+                <p className="text-sm text-cyan-400">
+                  {signal.category}
+                </p>
 
-              {signals.slice(-4).map((signal) => (
-                <div
-                  key={signal.id}
-                  className="rounded-xl border border-slate-800 bg-slate-900 p-5"
-                >
-                  <p className="text-sm text-slate-400">
-                    {signal.category}
-                  </p>
+                <p className="mt-2 line-clamp-2 text-sm text-slate-300">
+                  {signal.description}
+                </p>
 
-                  <p className="mt-2 line-clamp-2 text-sm text-slate-300">
-                    {signal.description}
-                  </p>
+                <p className="mt-3 text-xs text-slate-500">
+                  📍 {signal.location}
+                </p>
 
-                  <p className="mt-3 text-xs text-slate-500">
-                    📍 {signal.location}
-                  </p>
+                <p className="mt-1 text-xs text-slate-600">
+                  {signal.time}
+                </p>
+              </div>
+            ))}
 
-                  <p className="mt-1 text-xs text-slate-600">
-                    {signal.time}
-                  </p>
-                </div>
-              ))}
-
-            </div>
-          )}
-
+          </div>
         </section>
 
         {/* AI Insight */}
@@ -276,15 +291,13 @@ export default function Home() {
           </p>
 
           <h2 className="mt-2 text-xl font-semibold">
-            {signals.length >= 2
-              ? "Risk evolution detected"
-              : "Monitoring local risk"}
+            Developing Local Risk Pattern
           </h2>
 
           <p className="mt-3 max-w-3xl leading-7 text-slate-300">
-            {signals.length >= 2
-              ? "Multiple local signals are being observed. Their combined pattern indicates a developing risk trend that requires continued human monitoring."
-              : "SafePulse AI is monitoring local observations. Additional signals help identify whether the risk pattern is developing."}
+            Multiple related local signals are increasing within the same
+            area and time window. The combined pattern indicates a
+            developing local risk that requires continued human monitoring.
           </p>
 
         </section>
