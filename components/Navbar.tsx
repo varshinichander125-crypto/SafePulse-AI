@@ -7,6 +7,7 @@ const navItems = [
   { name: "Dashboard", path: "/" },
   { name: "Report", path: "/report" },
   { name: "Analysis", path: "/analysis" },
+  { name: "Simulator", path: "/simulator" },
   { name: "Map", path: "/map" },
   { name: "History", path: "/history" },
 ];
