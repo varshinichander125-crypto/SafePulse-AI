@@ -16,6 +16,7 @@ type Signal = {
   location: string;
   category: string;
   description: string;
+  severity: string;
   time: string;
 };
 
@@ -46,6 +47,7 @@ export default function ReportPage() {
   const [location, setLocation] = useState("");
   const [category, setCategory] = useState("Waterlogging");
   const [description, setDescription] = useState("");
+  const [severity, setSeverity] = useState("Medium");
   const [riskScore, setRiskScore] = useState<number | null>(null);
   const [message, setMessage] = useState("");
 
@@ -60,13 +62,13 @@ export default function ReportPage() {
     );
 
     const newSignal: Signal = {
-      id: Date.now(),
-      location,
-      category,
-      description,
-      time: new Date().toLocaleTimeString(),
-    };
-
+  id: Date.now(),
+  location,
+  category,
+  description,
+  severity,
+  time: new Date().toLocaleTimeString(),
+};
     const updatedSignals = [...oldSignals, newSignal];
 
     const newRisk = calculateRisk(updatedSignals);
@@ -138,14 +140,28 @@ export default function ReportPage() {
             Description
           </label>
 
-          <textarea
-            rows={5}
-            placeholder="Describe what you observed..."
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 outline-none"
-          />
+          <textarea 
+          
+  rows={5} 
+  placeholder="Describe what you observed..." 
+  value={description} 
+  onChange={(e) => setDescription(e.target.value)} 
+  className="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 outline-none" 
+/>
+            
+<label className="mt-6 block text-sm text-slate-300">
+  Severity Level
+</label>
 
+<select
+  value={severity}
+  onChange={(e) => setSeverity(e.target.value)}
+  className="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3"
+>
+  <option>Low</option>
+  <option>Medium</option>
+  <option>High</option>
+</select>
           <button
             type="button"
             onClick={handleSubmit}
