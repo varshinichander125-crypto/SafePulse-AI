@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import RiskFactorBreakdown from "../components/RiskFactorBreakdown";
+
 import {
   LineChart,
   Line,
@@ -136,9 +138,11 @@ export default function Home() {
             Understand how local risk is developing before it escalates.
           </p>
         </div>
+        
 
         {/* Main Risk Cards */}
         <div className="grid gap-6 md:grid-cols-3">
+          
 
           {/* Current Risk */}
           <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 md:col-span-2">
@@ -184,8 +188,22 @@ export default function Home() {
             </p>
           </div>
         </div>
+                
+
+        {/* Risk Factor Breakdown */}
+        <section className="mt-8">
+          <RiskFactorBreakdown
+            totalRisk={risk}
+            factors={signals.map((signal) => ({
+              name: signal.category,
+              value: riskValues[signal.category] ?? 5,
+            }))}
+          />
+        </section>
 
         {/* Risk Evolution */}
+
+      
         <section className="mt-8 rounded-2xl border border-slate-800 bg-slate-900 p-6">
 
           <div className="mb-6">
