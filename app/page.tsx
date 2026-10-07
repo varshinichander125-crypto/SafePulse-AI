@@ -200,23 +200,73 @@ export default function Home() {
             }))}
           />
         </section>
+                {/* Risk Intelligence */}
+        <section className="mt-8 grid gap-6 md:grid-cols-2">
 
-        {/* Risk Evolution */}
+          {/* Risk Velocity */}
+          <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6">
+            <p className="text-sm font-semibold text-cyan-400">
+              RISK VELOCITY
+            </p>
 
-      
+            <h2 className="mt-2 text-3xl font-bold text-white">
+              {signals.length >= 2 ? "+18 points" : "Stable"}
+            </h2>
+
+            <p className="mt-2 text-sm leading-6 text-slate-400">
+              {signals.length >= 2
+                ? "Risk is increasing as additional local signals emerge."
+                : "Not enough signals to identify a developing trend."}
+            </p>
+
+            <div className="mt-5 rounded-xl border border-slate-800 bg-slate-950 p-4">
+              <p className="text-xs text-slate-500">
+                Trend indicator
+              </p>
+
+              <p className="mt-1 text-sm font-semibold text-cyan-300">
+                {signals.length >= 3 ? "Increasing" : "Monitoring"}
+              </p>
+            </div>
+          </div>
+
+          {/* Top Contributing Factor */}
+          <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6">
+            <p className="text-sm font-semibold text-cyan-400">
+              TOP CONTRIBUTING FACTOR
+            </p>
+
+            <h2 className="mt-2 text-3xl font-bold text-white">
+              {signals.length > 0
+                ? signals[signals.length - 1].category
+                : "None"}
+            </h2>
+
+            <p className="mt-2 text-sm leading-6 text-slate-400">
+              Most recent signal contributing to the current local risk.
+            </p>
+
+            <div className="mt-5 rounded-xl border border-slate-800 bg-slate-950 p-4">
+              <p className="text-xs text-slate-500">
+                Risk contribution
+              </p>
+
+              <p className="mt-1 text-sm font-semibold text-cyan-300">
+                +{signals.length > 0
+                  ? riskValues[signals[signals.length - 1].category] ?? 5
+                  : 0} points
+              </p>
+            </div>
+          </div>
+
+        </section>
+
+                {/* Risk Evolution */}
         <section className="mt-8 rounded-2xl border border-slate-800 bg-slate-900 p-6">
 
           <div className="mb-6">
             <p className="text-sm font-medium text-cyan-400">
               RISK EVOLUTION
-            </p>
-
-            <h2 className="mt-1 text-xl font-semibold">
-              Local Risk Trend
-            </h2>
-
-            <p className="mt-1 text-sm text-slate-400">
-              Risk evolution based on multiple local signals
             </p>
           </div>
 
@@ -299,6 +349,51 @@ export default function Home() {
             ))}
 
           </div>
+        </section> 
+                {/* Early Warning Center */}
+        <section className="mt-8 rounded-2xl border border-amber-500/30 bg-amber-500/5 p-6">
+          <div className="flex items-start gap-4">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-amber-500/10 text-2xl">
+              ⚠️
+            </div>
+
+            <div>
+              <p className="text-sm font-semibold text-amber-400">
+                EARLY WARNING
+              </p>
+
+              <h2 className="mt-1 text-xl font-bold text-white">
+                {risk >= 76
+                  ? "High Attention: Local Risk Escalating"
+                  : risk >= 51
+                  ? "Developing Local Risk Detected"
+                  : risk >= 26
+                  ? "Watch: Risk Signals Increasing"
+                  : "No Significant Risk Escalation"}
+              </h2>
+
+              <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-400">
+                {risk >= 51
+                  ? "Multiple local signals are developing within the monitored area. Continued human monitoring is recommended."
+                  : "Current signals do not indicate a significant developing risk pattern. Continue monitoring local conditions."}
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-5 rounded-xl border border-slate-800 bg-slate-950 p-4">
+            <p className="text-sm font-semibold text-cyan-300">
+              Monitoring Recommendation
+            </p>
+
+            <p className="mt-2 text-sm leading-6 text-slate-400">
+              Verify local conditions and monitor whether additional related
+              signals emerge in the same area and time window.
+            </p>
+          </div>
+
+          <p className="mt-4 text-xs text-slate-600">
+            Prototype early-warning support • Human verification remains essential.
+          </p>
         </section>
 
         {/* AI Insight */}

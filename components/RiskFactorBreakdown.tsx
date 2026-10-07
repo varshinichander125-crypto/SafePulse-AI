@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 type RiskFactor = {
   name: string;
   value: number;
@@ -36,8 +38,8 @@ export default function RiskFactorBreakdown({
             No active signals available.
           </p>
         ) : (
-          factors.map((factor) => (
-            <div key={factor.name}>
+          factors.map((factor, index) => (
+            <div key={`${factor.name}-${index}`}>
               <div className="mb-2 flex items-center justify-between">
                 <span className="text-sm text-slate-300">
                   {factor.name}
